@@ -1,49 +1,28 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <inttypes.h>
+import sys
 
-unsigned long long int factors(unsigned long long int number);
-int main (int argc, char **argv)
-{
-    if (argc != 2)
-    {
-        fprintf(stderr, "Not the right Usage.\n");
-        return (0);
-    }
+def factorize(num):
 
-    FILE *file = fopen(argv[1], "r");
-    if (file == NULL)
-        fprintf(stderr, "Error: can't open file %s\n", argv[1]);
+	for factor_one in range(2, num):
+		if num % factor_one != 0:
+			continue
+		factor_two = int(num / factor_one)
+		return(factor_one, factor_two)
+	return (0, 0)
 
-    char buffer[256];
-    unsigned long long int number, first, second;
-    while (fgets(buffer, 256, file) != NULL)
-    {
-        number = atoi(buffer);
-        first = factors(number);
-        if (first == 0)
-        {
-            printf("Couldn't factorize %lld\n", number);
-            continue;
-        }
-        printf("%lld=%lld*%lld\n", number, number/first, first);
-    }
-    fclose(file);
-    return (0);
-}
 
-unsigned long long int factors(unsigned long long int number)
-{
-    unsigned long long int i;
-    for (i = 2; i < number; i++)
-    {
-        if (number % i != 0)
-        {
-            continue;
-        }
-        return (i);
-    }
-    return (0);
-}
+if len(sys.argv) != 2:
+	sys.exit(f"Usage: {sys.argv[0]} <filename>")
+
+try:
+	with open(sys.argv[1]) as file:
+		numbers = file.readlines()
+
+		for num in numbers:
+			cast_num = int(num)
+			factor_one, factor_two = factorize(cast_num)
+			if factor_one == 0:
+				print("No factors found.")
+				continue
+			print("{}={}*{}".format(cast_num, factor_two, factor_one))
+except:
+	pass
