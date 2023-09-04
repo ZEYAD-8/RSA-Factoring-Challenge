@@ -4,18 +4,18 @@
 from sys import argv
 
 
-def factorize(value):
+def factorize(number):
     """"print a simple descomposition of an integer > 1"""
     i = 2
 
-    if value < 2:
+    if number < 2:
         return
     print()
-    print(value, "<- value-bef")
-    while value % i:
+    print(number, "<- number-bef")
+    while number % i:
         i += 1
-    print("{:.0f}={:.0f}*{:.0f}".format(value, value / i, i))
-    print(value, "<- value-aft")
+    print("{:.0f}={:.0f}*{:.0f}".format(number, number / i, i))
+    print(number, "<- number-aft")
     print()
 
 if len(argv) != 2:
@@ -26,8 +26,8 @@ try:
         line = file.readline()
 
         while line != "":
-            value = int(line.split('\n')[0])
-            factorize(value)
+            number = int(line.split('\n')[0])
+            factorize(number)
             line = file.readline()
 except:
     pass
